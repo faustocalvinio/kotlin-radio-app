@@ -29,42 +29,19 @@ import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
 
-//    private lateinit var notificationHelper: NotificationHelper
-//    private val handler = Handler(Looper.getMainLooper())
-//    private val notificationRunnable = object : Runnable {
-//        override fun run() {
-//            notificationHelper.sendNotification()
-//            handler.postDelayed(this, 5000) // 20 segundos
-//        }
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-//        notificationHelper = NotificationHelper(this)
-//        notificationHelper.createNotificationChannel()
-//
-//        handler.post(notificationRunnable)
-
-
         setContent {
             RadioAPPTheme {
                 RadioAppScreen()
             }
         }
-
-
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        handler.removeCallbacks(notificationRunnable)
-//    }
 }
 
 @Composable
-fun RadioAppScreen(){
+fun RadioAppScreen() {
     val radioStations = mapOf(
         "Galaxxy France" to "https://eu8.fastcast4u.com/proxy/rockfmgm?mp=/1",
         "Los 40" to "https://edge02.radiohdvivo.com/stream/los40",
@@ -74,28 +51,30 @@ fun RadioAppScreen(){
         "Del Siglo" to "https://stream.lt8.com.ar:8443/delsiglo995.mp3",
         "88.7" to "https://streaming.redboing.com/radio/8010/radio.aac",
         "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915",
-        "UNR" to "https://cdn.instream.audio/:9202/stream"
+        "UNR" to "https://cdn.instream.audio/:9202/stream",
+        "Cadena 3" to "https://26683.live.streamtheworld.com/RADIO3_SC",
+        "House Nation UK" to "https://streaming.radio.co/s06bd9d805/listen",
+        "La Red" to "https://27353.live.streamtheworld.com/LA_RED_AM910AAC_SC",
+        "FM Vida DUDA" to "https://streaming450tb.locucionar.com/proxy/fmvida979?mp=/stream"
+
     )
     val context = LocalContext.current
     var selectedUrl by remember { mutableStateOf<String?>(null) }
     var selectedRadio by remember { mutableStateOf<String?>(null) }
     var isPlaying by remember { mutableStateOf(true) }
 
-    Scaffold(modifier = Modifier.fillMaxSize().background(Color.Black)) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).fillMaxHeight().background(Color.Black).verticalScroll(
-            rememberScrollState()
-        ), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            radioStations.forEach { (name, url) ->
-                Button(modifier = Modifier.fillMaxWidth().height(78.dp).padding(end = 20.dp),onClick = {
-                    selectedUrl = url
-                    selectedRadio = name
-                    isPlaying = true
-                    Log.d("MainActivity", "Selected URL: $url")
-                }) {
-                    Text(text = name,style = MaterialTheme.typography.titleLarge)
-                }
-            }
-
+    Scaffold(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxHeight()
+                .background(Color.Black)
+                .verticalScroll(
+                    rememberScrollState()
+                ), verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             selectedRadio?.let { radioName ->
                 Text(
                     text = "Reproduciendo: $radioName",
@@ -104,21 +83,42 @@ fun RadioAppScreen(){
                     color = Color.White
                 )
             }
+            Button(
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = { isPlaying = !isPlaying },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isPlaying) Color.Red else Color.Green
+                )
+            ) {
+                Text(
+                    text = if (isPlaying) "Pausar" else "Reproducir",
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            radioStations.forEach { (name, url) ->
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(78.dp)
+                        .padding(end = 20.dp),
+                    onClick = {
+                        selectedUrl = url
+                        selectedRadio = name
+                        isPlaying = true
+                        Log.d("MainActivity", "Selected URL: $url")
+                    }) {
+                    Text(text = name, style = MaterialTheme.typography.titleLarge)
+                }
+            }
+
+
 
             selectedUrl?.let { url ->
                 ExoPlayerView(context = context, url = url, isPlaying = isPlaying)
             }
 
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = { isPlaying = !isPlaying },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isPlaying) Color.Red else Color.Green // Rojo si está reproduciendo, verde si está pausado
-                )
 
-            ) {
-                Text(text = if (isPlaying) "Pausar" else "Reproducir" , modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
-            }
         }
     }
 }

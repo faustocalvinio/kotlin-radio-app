@@ -1,14 +1,9 @@
 package com.example.radioapp
 
 import android.util.Log
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import android.content.Context
 
 @Composable
@@ -38,15 +33,4 @@ fun ExoPlayerView(context: Context, url: String, isPlaying: Boolean) {
         }
     }
 
-//    AndroidView(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .wrapContentHeight(),
-//        factory = {
-//            PlayerView(context).apply {
-//                this.player = player
-//                Log.d("PlayerView", "PlayerView created")
-//            }
-//        }
-//    )
 }
