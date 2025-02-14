@@ -2,7 +2,6 @@ package com.example.radioapp
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,22 +9,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
-import android.graphics.Color.BLACK
-import androidx.compose.ui.unit.TextUnit
 import com.example.radioapp.ui.theme.RadioAPPTheme
-
-import androidx.annotation.ColorInt
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -37,13 +29,23 @@ import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
 
-
+//    private lateinit var notificationHelper: NotificationHelper
+//    private val handler = Handler(Looper.getMainLooper())
+//    private val notificationRunnable = object : Runnable {
+//        override fun run() {
+//            notificationHelper.sendNotification()
+//            handler.postDelayed(this, 5000) // 20 segundos
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
+//        notificationHelper = NotificationHelper(this)
+//        notificationHelper.createNotificationChannel()
+//
+//        handler.post(notificationRunnable)
 
 
         setContent {
@@ -54,6 +56,11 @@ class MainActivity : ComponentActivity() {
 
 
     }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        handler.removeCallbacks(notificationRunnable)
+//    }
 }
 
 @Composable
