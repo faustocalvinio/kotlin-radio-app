@@ -1,70 +1,43 @@
 package com.example.radioapp
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.annotation.OptIn
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.material3.MaterialTheme
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.PlayerNotificationManager
 import com.example.radioapp.ui.theme.RadioAPPTheme
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
-
-//    private lateinit var notificationHelper: NotificationHelper
-//    private val handler = Handler(Looper.getMainLooper())
-//    private val notificationRunnable = object : Runnable {
-//        override fun run() {
-//            notificationHelper.sendNotification()
-//            handler.postDelayed(this, 5000) // 20 segundos
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-//        notificationHelper = NotificationHelper(this)
-//        notificationHelper.createNotificationChannel()
-//
-//        handler.post(notificationRunnable)
-
 
         setContent {
             RadioAPPTheme {
                 RadioAppScreen()
             }
         }
-
-
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        handler.removeCallbacks(notificationRunnable)
-//    }
 }
 
+@OptIn(UnstableApi::class)
 @Composable
-fun RadioAppScreen(){
+fun RadioAppScreen() {
+    val context = LocalContext.current
     val radioStations = mapOf(
         "Galaxxy France" to "https://eu8.fastcast4u.com/proxy/rockfmgm?mp=/1",
         "Los 40" to "https://edge02.radiohdvivo.com/stream/los40",
@@ -73,26 +46,31 @@ fun RadioAppScreen(){
         "Boing" to "https://streaming.redboing.com/radio/8000/radio.aac",
         "Del Siglo" to "https://stream.lt8.com.ar:8443/delsiglo995.mp3",
         "88.7" to "https://streaming.redboing.com/radio/8010/radio.aac",
-        "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915",
-        "UNR" to "https://cdn.instream.audio/:9202/stream"
+        "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915"
     )
-    val context = LocalContext.current
     var selectedUrl by remember { mutableStateOf<String?>(null) }
     var selectedRadio by remember { mutableStateOf<String?>(null) }
-    var isPlaying by remember { mutableStateOf(true) }
 
-    Scaffold(modifier = Modifier.fillMaxSize().background(Color.Black)) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).fillMaxHeight().background(Color.Black).verticalScroll(
-            rememberScrollState()
-        ), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding)) {
             radioStations.forEach { (name, url) ->
-                Button(modifier = Modifier.fillMaxWidth().height(78.dp).padding(end = 20.dp),onClick = {
-                    selectedUrl = url
-                    selectedRadio = name
-                    isPlaying = true
-                    Log.d("MainActivity", "Selected URL: $url")
-                }) {
-                    Text(text = name,style = MaterialTheme.typography.titleLarge)
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        selectedUrl = url
+                        selectedRadio = name
+                        val intent = Intent(context, PlayerService::class.java).apply {
+                            action = PlayerNotificationManager.ACTION_PLAY
+                            putExtra("url", url)
+                        }
+                        context.startService(intent)
+                    }
+                ) {
+                    Text(text = name, style = androidx.compose.material3.MaterialTheme.typography.titleLarge)
                 }
             }
 
@@ -100,24 +78,8 @@ fun RadioAppScreen(){
                 Text(
                     text = "Reproduciendo: $radioName",
                     modifier = Modifier.padding(top = 16.dp),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White
+                    style = androidx.compose.material3.MaterialTheme.typography.headlineSmall
                 )
-            }
-
-            selectedUrl?.let { url ->
-                ExoPlayerView(context = context, url = url, isPlaying = isPlaying)
-            }
-
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = { isPlaying = !isPlaying },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isPlaying) Color.Red else Color.Green // Rojo si está reproduciendo, verde si está pausado
-                )
-
-            ) {
-                Text(text = if (isPlaying) "Pausar" else "Reproducir" , modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge)
             }
         }
     }
