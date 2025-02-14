@@ -1,10 +1,15 @@
 package com.example.radioapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,9 +34,11 @@ import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        createNotificationChannel(this)
         setContent {
             RadioAPPTheme {
                 RadioAppScreen()
@@ -39,6 +46,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
+private fun createNotificationChannel(context: Context) {
+    val channel = NotificationChannel(
+        "music_channel",
+        "Reproductor de Música",
+        NotificationManager.IMPORTANCE_LOW
+    )
+    val manager = context.getSystemService(NotificationManager::class.java)
+    manager?.createNotificationChannel(channel)
+}
+
 
 @Composable
 fun RadioAppScreen() {
