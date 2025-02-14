@@ -30,6 +30,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
 
@@ -43,7 +45,8 @@ class MainActivity : ComponentActivity() {
         "Boing" to "https://streaming.redboing.com/radio/8000/radio.aac",
         "Del Siglo" to "https://stream.lt8.com.ar:8443/delsiglo995.mp3",
         "88.7" to "https://streaming.redboing.com/radio/8010/radio.aac",
-        "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915"
+        "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915",
+        "UNR" to "https://cdn.instream.audio/:9202/stream"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +64,9 @@ class MainActivity : ComponentActivity() {
                 var isPlaying by remember { mutableStateOf(true) }
 
                 Scaffold(modifier = Modifier.fillMaxSize().background(Color.Black)) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding).fillMaxHeight().background(Color.Black), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Column(modifier = Modifier.padding(innerPadding).fillMaxHeight().background(Color.Black).verticalScroll(
+                        rememberScrollState()
+                    ), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         radioStations.forEach { (name, url) ->
                             Button(modifier = Modifier.fillMaxWidth().height(78.dp).padding(end = 20.dp),onClick = {
                                 selectedUrl = url
