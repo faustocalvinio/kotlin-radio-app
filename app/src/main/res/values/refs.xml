@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="ic_stop">
+        <svg height="17" viewBox="0 0 16 16" width="17" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5z" fill="#ffffff" />
+        </svg>
+    </drawable>
+    <drawable name="ic_pause_2">
+        <svg height="17" viewBox="0 0 24 24" width="17" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75s9.75-4.365 9.75-9.75S17.385 2.25 12 2.25m-2 6a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75m4.75.75v6a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0" fill="#ffffff" />
+        </svg>
+    </drawable>
+    <drawable name="ic_play_2">
+        <svg height="17" viewBox="0 0 48 48" width="17" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="IconifyId1950587a59d7c2bcd1">
+                    <g fill="none" stroke-linejoin="round" stroke-width="4">
+                        <path d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z" fill="#fff" stroke="#fff" />
+                        <path d="M20 24v-6.928l6 3.464L32 24l-6 3.464l-6 3.464z" fill="#000" stroke="#000" />
+                    </g>
+                </mask>
+            </defs>
+            <path d="M0 0h48v48H0z" fill="#ffffff" mask="url(#IconifyId1950587a59d7c2bcd1)" />
+        </svg>
+    </drawable>
+</resources>
