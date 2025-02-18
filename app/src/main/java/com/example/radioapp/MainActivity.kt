@@ -22,10 +22,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
 
@@ -40,6 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//@Preview
 @Composable
 fun RadioAppScreen() {
     val radioStations = mapOf(
@@ -62,10 +66,13 @@ fun RadioAppScreen() {
     var selectedUrl by remember { mutableStateOf<String?>(null) }
     var selectedRadio by remember { mutableStateOf<String?>(null) }
     var isPlaying by remember { mutableStateOf(true) }
+    var startedPlaying = false
 
-    Scaffold(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)) { innerPadding ->
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -83,18 +90,27 @@ fun RadioAppScreen() {
                     color = Color.White
                 )
             }
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = { isPlaying = !isPlaying },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isPlaying) Color.Red else Color.Green
-                )
-            ) {
-                Text(
-                    text = if (isPlaying) "Pausar" else "Reproducir",
-                    modifier = Modifier.fillMaxWidth(),
-                    style = MaterialTheme.typography.titleLarge
-                )
+            if (startedPlaying) {
+                Button(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                        .height(78.dp)
+                        .padding(end = 20.dp),
+                    onClick = { isPlaying = !isPlaying },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isPlaying) Color.Red else Color.Green
+                    )
+                ) {
+                    Text(
+                        text = if (isPlaying) "Pausar" else "Reproducir",
+
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize(),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
             radioStations.forEach { (name, url) ->
                 Button(
@@ -106,6 +122,7 @@ fun RadioAppScreen() {
                         selectedUrl = url
                         selectedRadio = name
                         isPlaying = true
+                        startedPlaying = true
                         Log.d("MainActivity", "Selected URL: $url")
                     }) {
                     Text(text = name, style = MaterialTheme.typography.titleLarge)
