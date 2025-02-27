@@ -23,12 +23,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
 
@@ -43,25 +41,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//@Preview
 @Composable
 fun RadioAppScreen() {
-    val radioStations = mapOf(
-        "Galaxxy France" to "https://eu8.fastcast4u.com/proxy/rockfmgm?mp=/1",
-        "Los 40" to "https://edge02.radiohdvivo.com/stream/los40",
-        "Aspen" to "https://27413.live.streamtheworld.com/ASPEN.mp3",
-        "VORTERIX" to "https://ice2.edge-apps.net/radio1_high-20057.audio",
-        "Boing" to "https://streaming.redboing.com/radio/8000/radio.aac",
-        "Del Siglo" to "https://stream.lt8.com.ar:8443/delsiglo995.mp3",
-        "88.7" to "https://streaming.redboing.com/radio/8010/radio.aac",
-        "Crystal FM" to "https://radio02.ferozo.com/proxy/ra02001330?mp=/stream?ver%3D468915",
-        "UNR" to "https://cdn.instream.audio/:9202/stream",
-        "Cadena 3" to "https://26683.live.streamtheworld.com/RADIO3_SC",
-        "House Nation UK" to "https://streaming.radio.co/s06bd9d805/listen",
-        "La Red" to "https://27353.live.streamtheworld.com/LA_RED_AM910AAC_SC",
-        "FM Vida DUDA" to "https://streaming450tb.locucionar.com/proxy/fmvida979?mp=/stream"
-
-    )
     val context = LocalContext.current
     var selectedUrl by remember { mutableStateOf<String?>(null) }
     var selectedRadio by remember { mutableStateOf<String?>(null) }
