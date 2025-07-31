@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.radioapp"
-    compileSdk = 35
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.radioapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -41,22 +41,18 @@ android {
 
 dependencies {
 
-    implementation("androidx.media:media:1.4.3")
-    implementation("androidx.media3:media3-exoplayer:1.0.0")
-    implementation("androidx.media3:media3-session:1.0.0")
-    implementation("androidx.media3:media3-ui:1.0.0")
+    implementation("androidx.media:media:1.6.0")
+    implementation("androidx.media3:media3-exoplayer:1.2.1")
+    implementation("androidx.media3:media3-session:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("com.google.android.exoplayer:exoplayer:2.16.1")
-    implementation("com.google.android.exoplayer:exoplayer-ui:2.16.1")
-    implementation("androidx.compose.ui:ui:1.0.5")
-    implementation("androidx.compose.material3:material3:1.0.0")
-    implementation("androidx.activity:activity-compose:1.4.0")
-//    implementation("androidx.media3:media3-exoplayer:1.0.0")
-//    implementation("androidx.media3:media3-ui:1.0.0")
-//    implementation("androidx.compose.ui:ui:1.0.5")
-//    implementation("androidx.compose.material3:material3:1.0.0")
-//    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
+    implementation("androidx.compose.ui:ui:1.5.4")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.activity:activity-compose:1.8.0")
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
